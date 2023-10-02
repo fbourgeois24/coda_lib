@@ -91,8 +91,8 @@ class coda_file():
 				numéro_mvt = int(line[2:6]) # Numéro interne au coda
 				data["mouvements"].setdefault(numéro_mvt, {"communication": ""})
 
-				if line[1] == "1":
-					# Première ligne du mouvement
+				if line[1] == "1" and int(line[6:10]) == 0:
+					# Première ligne du mouvement et première ligne de détail
 					sens_mouvement = 1 if line[31] == "0" else -1
 					data["mouvements"][numéro_mvt]["montant"] = Decimal(line[32:47]) / 1000 * sens_mouvement
 					data["mouvements"][numéro_mvt]["date_valeur"] = dt.strptime(line[47:53], "%d%m%y").date()
